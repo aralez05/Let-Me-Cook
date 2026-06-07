@@ -1,49 +1,51 @@
-<div class="p-6">
-
-  <h1 class="text-3xl font-bold mb-6">
-    Carrito
-  </h1>
-
-  <p>Mesa: {{ mesa }}</p>
-
-  <p>Elementos: {{ productos().length }}</p>
-
-  <div *ngFor="let item of productos()">
-
-    <div class="border p-4 mb-2">
-
-      <strong>
-        {{ item.nombre }}
-      </strong>
-
-      <br>
-
-      Cantidad:
-      {{ item.cantidad }}
-
-      <br>
-
-      Subtotal:
-      ${{ item.precio * item.cantidad }}
-      <button
-            (click)="reducir(item)"
-            class="
-            bg-red-500
-            hover:bg-red-600
-            text-white
-            px-3
-            py-1
-            rounded
-            mt-2
-            ">
-            -
-        </button>
+<div class="carrito-container">
+  <header class="carrito-header">
+    <div class="logo-area">
+      <h1>Let Me Cook <span>Carrito</span></h1>
+      <p class="subtitle">Mesa {{ mesa }}</p>
+      <button (click)="volverMenu()" style="margin-top: 10px; padding: 5px 10px; border-radius: 5px; cursor: pointer;">⬅ Volver al Menú</button>
     </div>
+    <div class="status-bar">
+      <div class="stat-pill">
+        {{ productos().length }} Elementos
+      </div>
+    </div>
+  </header>
 
-  </div>
+  <main class="cart-items">
+    @if (productos().length === 0) {
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <p>Tu carrito está vacío</p>
+      </div>
+    } @else {
+      @for (item of productos(); track item.productoId) {
+        <article class="cart-item-card">
+          <div class="item-info">
+            <h2>{{ item.nombre }}</h2>
+            <div class="item-meta">
+              <span class="quantity">Cant: {{ item.cantidad }}</span>
+              <span class="price">Subtotal: ${{ item.precio * item.cantidad | number:'1.2-2' }}</span>
+            </div>
+          </div>
+          <button class="btn-remove" (click)="reducir(item)" title="Reducir cantidad">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+        </article>
+      }
+    }
+  </main>
 
-  <h2>
-    Total: ${{ total() }}
-  </h2>
-
+  @if (productos().length > 0) {
+    <footer class="cart-footer">
+      <div class="total-area">
+        <span>Total a pagar:</span>
+        <span class="total-price">${{ total() | number:'1.2-2' }}</span>
+      </div>
+      <button class="btn-primary" (click)="enviarPedido()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Confirmar Pedido
+      </button>
+    </footer>
+  }
 </div>

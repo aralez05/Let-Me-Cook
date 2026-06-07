@@ -1,5 +1,5 @@
 import { Component, signal, computed } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CarritoService } from '../../../../../core/services/carrito';
 
@@ -26,7 +26,8 @@ export class Carrito {
 
   constructor(
     private carritoService: CarritoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -90,4 +91,33 @@ export class Carrito {
     });
 
 }
+
+  volverMenu() {
+    this.router.navigate(['m', this.mesa]);
+  }
+
+  enviarPedido() {
+    if (this.productos().length === 0) return;
+    const pedidosGuardados = localStorage.getItem('pedidos_dashboard');
+    let pedidos = pedidosGuardados ? JSON.parse(pedidosGuardados) : [];
+    
+    const nuevoPedido = {
+      id: 'ord-' + Math.floor(Math.random() * 10000),
+      tableNumber: this.mesa,
+      items: this.productos().map(item => ({
+        productoId: item.productoId,
+        nombre: item.nombre,
+        precio: item.precio,
+        cantidad: item.cantidad
+      })),
+      status: 'pending',
+      timeReceived: new Date()
+    };
+    
+    pedidos.push(nuevoPedido);
+    localStorage.setItem('pedidos_dashboard', JSON.stringify(pedidos));
+    window.dispatchEvent(new Event('storage'));
+    
+    this.router.navigate(['m', this.mesa, 'pedido']);
+  }
 }
