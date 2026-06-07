@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
+import { CarritoModule } from './carrito/carrito.module';
 
 import { SequelizeModule }
 from '@nestjs/sequelize';
@@ -25,7 +26,9 @@ from './usuarios/usuarios.module';
 
     UsuariosModule,
 
-    AuthModule
+    AuthModule,
+
+    CarritoModule
 
   ]
 
