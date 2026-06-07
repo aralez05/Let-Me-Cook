@@ -59,5 +59,27 @@ export class CarritoController {
       );
 
   }
+  @Post(
+    'mesa/:mesa/reducir/:productoId'
+    )
+    reducirProducto(
 
+    @Param('mesa')
+    mesa: string,
+
+    @Param('productoId')
+    productoId: string
+
+    ) {
+
+    return this.carritoService
+        .reducirProducto(
+
+        Number(mesa),
+
+        Number(productoId)
+
+        );
+
+    }
 }

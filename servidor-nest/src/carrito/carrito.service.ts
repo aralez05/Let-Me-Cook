@@ -71,4 +71,61 @@ export class CarritoService {
 
   }
 
+  reducirProducto(
+    mesa: number,
+    productoId: number
+    ) {
+
+    const carrito =
+        this.carritos.get(mesa);
+
+    if (!carrito) {
+
+        return [];
+
+    }
+
+    const item =
+        carrito.find(
+
+        p =>
+            p.productoId ===
+            productoId
+
+        );
+
+    if (!item) {
+
+        return carrito;
+
+    }
+
+    item.cantidad--;
+
+    if (
+
+        item.cantidad <= 0
+
+    ) {
+
+        const indice =
+        carrito.findIndex(
+
+            p =>
+            p.productoId ===
+            productoId
+
+        );
+
+        carrito.splice(
+        indice,
+        1
+        );
+
+    }
+
+    return carrito;
+
+    }
+
 }
