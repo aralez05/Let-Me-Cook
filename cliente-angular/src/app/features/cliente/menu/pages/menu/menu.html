@@ -1,0 +1,49 @@
+<div class="p-6">
+
+  <h1 class="text-3xl font-bold mb-6">
+
+    Mesa {{ mesa }}
+
+  </h1>
+
+  @for (
+    producto of productos;
+    track producto.id
+  ) {
+
+    <div
+    class="border p-4 rounded mb-4">
+
+      <h2>
+
+        {{ producto.nombre }}
+
+      </h2>
+
+      <p>
+
+        ${{ producto.precio }}
+
+      </p>
+
+      <button
+
+      (click)="agregar(producto)"
+
+      class="
+      bg-blue-500
+      text-white
+      px-4
+      py-2
+      rounded
+      ">
+
+        Agregar
+
+      </button>
+
+    </div>
+
+  }
+
+</div>

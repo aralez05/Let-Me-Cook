@@ -1,0 +1,35 @@
+<div class="p-6">
+
+  <h1 class="text-3xl font-bold mb-6">
+
+    Carrito
+
+  </h1>
+
+  @for (item of productos; track item.producto.id) {
+
+  <div class="border p-4 mb-2">
+
+    <strong>
+      {{ item.producto.nombre }}
+    </strong>
+
+    <br>
+
+    Cantidad:
+    {{ item.cantidad }}
+
+    <br>
+
+    Subtotal:
+    ${{ item.producto.precio * item.cantidad }}
+
+  </div>
+
+}
+    <h2>
+
+Total: ${{ total }}
+
+</h2>
+</div>  
