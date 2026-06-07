@@ -1,35 +1,49 @@
 <div class="p-6">
 
   <h1 class="text-3xl font-bold mb-6">
-
     Carrito
-
   </h1>
 
-  @for (item of productos; track item.producto.id) {
+  <p>Mesa: {{ mesa }}</p>
 
-  <div class="border p-4 mb-2">
+  <p>Elementos: {{ productos().length }}</p>
 
-    <strong>
-      {{ item.producto.nombre }}
-    </strong>
+  <div *ngFor="let item of productos()">
 
-    <br>
+    <div class="border p-4 mb-2">
 
-    Cantidad:
-    {{ item.cantidad }}
+      <strong>
+        {{ item.nombre }}
+      </strong>
 
-    <br>
+      <br>
 
-    Subtotal:
-    ${{ item.producto.precio * item.cantidad }}
+      Cantidad:
+      {{ item.cantidad }}
+
+      <br>
+
+      Subtotal:
+      ${{ item.precio * item.cantidad }}
+      <button
+            (click)="reducir(item)"
+            class="
+            bg-red-500
+            hover:bg-red-600
+            text-white
+            px-3
+            py-1
+            rounded
+            mt-2
+            ">
+            -
+        </button>
+    </div>
 
   </div>
 
-}
-    <h2>
+  <h2>
+    Total: ${{ total() }}
+  </h2>
 
-Total: ${{ total }}
-
-</h2>
-</div>  
+</div>

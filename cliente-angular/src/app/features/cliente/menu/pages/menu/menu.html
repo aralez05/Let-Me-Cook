@@ -1,23 +1,49 @@
-<div class="menu-container">
-  <header class="menu-header">
-    <div class="logo-area">
-      <h1>Let Me Cook <span>Menú</span></h1>
-      <p class="subtitle">Mesa {{ mesa }}</p>
-    </div>
-  </header>
+<div class="p-6">
 
-  <main class="products-grid">
-    @for (producto of productos; track producto.productoId) {
-      <article class="product-card">
-        <div class="product-info">
-          <h2>{{ producto.nombre }}</h2>
-          <p class="price">${{ producto.precio }}</p>
-        </div>
-        <button class="btn-add" (click)="agregar(producto)">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          Agregar
-        </button>
-      </article>
-    }
-  </main>
+  <h1 class="text-3xl font-bold mb-6">
+
+    Mesa {{ mesa }}
+
+  </h1>
+
+  @for (
+    producto of productos;
+    track producto.id
+  ) {
+
+    <div
+    class="border p-4 rounded mb-4">
+
+      <h2>
+
+        {{ producto.nombre }}
+
+      </h2>
+
+      <p>
+
+        ${{ producto.precio }}
+
+      </p>
+
+      <button
+
+      (click)="agregar(producto)"
+
+      class="
+      bg-blue-500
+      text-white
+      px-4
+      py-2
+      rounded
+      ">
+
+        Agregar
+
+      </button>
+
+    </div>
+
+  }
+
 </div>

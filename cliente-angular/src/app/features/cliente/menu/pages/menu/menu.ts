@@ -30,71 +30,37 @@ export class Menu {
   }
   productos = [
     {
-      productoId: 'P-001',
-      nombre: 'Hamburguesa Clásica',
+      id: 1,
+      nombre: 'Hamburguesa',
       precio: 120
     },
     {
-      productoId: 'P-002',
-      nombre: 'Hamburguesa Doble',
-      precio: 160
-    },
-    {
-      productoId: 'P-003',
-      nombre: 'Pizza Margarita',
+      id: 2,
+      nombre: 'Pizza',
       precio: 180
     },
     {
-      productoId: 'P-004',
-      nombre: 'Pizza Pepperoni',
-      precio: 200
-    },
-    {
-      productoId: 'P-005',
-      nombre: 'Tacos al Pastor',
+      id: 3,
+      nombre: 'Tacos',
       precio: 90
-    },
-    {
-      productoId: 'P-006',
-      nombre: 'Tacos de Bistec',
-      precio: 110
-    },
-    {
-      productoId: 'P-007',
-      nombre: 'Papas Fritas',
-      precio: 50
-    },
-    {
-      productoId: 'P-008',
-      nombre: 'Aros de Cebolla',
-      precio: 65
-    },
-    {
-      productoId: 'P-009',
-      nombre: 'Limonada',
-      precio: 35
-    },
-    {
-      productoId: 'P-010',
-      nombre: 'Coca Cola',
-      precio: 30
-    },
-    {
-      productoId: 'P-011',
-      nombre: 'Cerveza',
-      precio: 60
-    },
-    {
-      productoId: 'P-012',
-      nombre: 'Cheesecake',
-      precio: 75
     }
   ];
-    agregar(producto: any) {
-
-    this.carritoService.agregar(producto);
-
-    console.log('Agregado');
-
+  agregar(producto: any) {
+    this.carritoService
+      .agregarProducto(
+        this.mesa,
+        producto
+      )
+      .subscribe({
+        next: (respuesta) => {
+          console.log(
+            'Producto agregado',
+            respuesta
+          );
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
   }
 }

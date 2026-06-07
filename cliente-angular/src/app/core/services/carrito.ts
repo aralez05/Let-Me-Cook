@@ -1,105 +1,74 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject }
+from '@angular/core';
 
-import { Producto } from '../models/producto';
-import { ItemCarrito } from '../models/item-carrito';
+import { HttpClient }
+from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
 
-  private items: ItemCarrito[] = [];
+  private http =
+    inject(HttpClient);
 
-  constructor() {
+  private api =
+    'http://localhost:3000';
 
-    const guardados =
-      localStorage.getItem('carrito');
+  obtenerMesa(
+    mesa: number
+  ) {
 
-    if (guardados) {
+    return this.http.get(
 
-      this.items =
-        JSON.parse(guardados);
-
-    }
-
-  }
-
-  agregar(producto: Producto) {
-
-    const itemExistente =
-      this.items.find(
-        item => item.producto.id === producto.id
-      );
-
-    if (itemExistente) {
-
-      itemExistente.cantidad++;
-
-    } else {
-
-      this.items.push({
-        producto,
-        cantidad: 1
-      });
-
-    }
-
-    this.guardar();
-
-  }
-
-  obtener() {
-
-    return this.items;
-
-  }
-
-  eliminar(idProducto: number) {
-
-    this.items =
-      this.items.filter(
-        item => item.producto.id !== idProducto
-      );
-
-    this.guardar();
-
-  }
-
-  limpiar() {
-
-    this.items = [];
-
-    this.guardar();
-
-  }
-
-  obtenerTotal(): number {
-
-    return this.items.reduce(
-
-      (total, item) =>
-
-        total +
-        (item.producto.precio * item.cantidad),
-
-      0
+      `${this.api}/carrito/mesa/${mesa}`
 
     );
 
   }
 
-  private guardar() {
+  agregarProducto(
 
-    localStorage.setItem(
+    mesa: number,
 
-      'carrito',
+    producto: any
 
-      JSON.stringify(
-        this.items
-      )
+  ) {
+
+    return this.http.post(
+
+      `${this.api}/carrito/mesa/${mesa}/agregar`,
+
+      {
+        productoId:
+          producto.id,
+
+        nombre:
+          producto.nombre,
+
+        precio:
+          producto.precio
+      }
 
     );
 
   }
+  reducirProducto(
 
+    mesa: number,
+
+    productoId: number
+
+  ) {
+
+    return this.http.post(
+
+      `${this.api}/carrito/mesa/${mesa}/reducir/${productoId}`,
+
+      {}
+
+    );
+
+}
+  
 }

@@ -1,8 +1,11 @@
 import { Producto } from './producto';
-
 export interface ItemCarrito {
 
-  producto: Producto;
+  productoId: number;
+
+  nombre: string;
+
+  precio: number;
 
   cantidad: number;
 
